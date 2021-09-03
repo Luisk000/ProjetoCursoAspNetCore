@@ -12,6 +12,7 @@ using WebApplication5.ViewModels;
 namespace WebApplication5.Controllers
 {
     [Route("[controller]")]
+    [Authorize]
     public class ManagementController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -25,6 +26,7 @@ namespace WebApplication5.Controllers
  
         [Route("[action]")]
         [Route("")]
+        [AllowAnonymous]
         public ViewResult List()
         {
             
@@ -65,7 +67,6 @@ namespace WebApplication5.Controllers
 
         [Route("[action]")]
         [HttpPost]
-        [Authorize]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
             if (ModelState.IsValid) 
@@ -87,7 +88,6 @@ namespace WebApplication5.Controllers
 
         [Route("[action]")]
         [HttpGet]
-        [Authorize]
         public ViewResult Edit(int id)
         {
             Employee employee = _employeeRepository.GetEmployee(id);

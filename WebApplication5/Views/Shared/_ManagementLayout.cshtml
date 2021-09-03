@@ -1,4 +1,4 @@
-﻿@inject SignInManager<IdentityUser> signInManager;
+﻿@inject SignInManager<ApplicationUser> signInManager;
 <!DOCTYPE html>
 
 <html>
@@ -8,6 +8,8 @@
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 
     <title>@ViewBag.Title</title>
