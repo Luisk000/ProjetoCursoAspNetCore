@@ -88,4 +88,4 @@ C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\
 C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\Razor\Views\Admin\CreateRole.cshtml.g.cs
 C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\Razor\Views\Admin\ListRoles.cshtml.g.cs
-C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\Razor\Views\Admin\EditRole.cshtml.g.cs
+C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\Razor\Views\Admin\EditRoles.cshtml.g.cs

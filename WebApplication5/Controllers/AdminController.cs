@@ -57,7 +57,7 @@ namespace WebApplication5.Controllers
                 ViewBag.ErrorMessage = $"Função com Id: {id} não foi encontrada";
                 return View("NotFound");
             }
-            var model = new EditRoleViewModel { Id = role.Id, RoleName = role.Name };
+            var model = new EditRolesViewModel { Id = role.Id, RoleName = role.Name };
             foreach (var user in _userManager.Users)
             {
                 if (await _userManager.IsInRoleAsync(user, role.Name))
@@ -69,7 +69,7 @@ namespace WebApplication5.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRoles(EditRoleViewModel model)
+        public async Task<IActionResult> EditRoles(EditRolesViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.Id);
             if (role == null)
