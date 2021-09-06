@@ -53,6 +53,10 @@ namespace WebApplication5.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded) 
                 {
+                    if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("ListUsers", "Admin");
+                    }
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("List", "Management");
                 }
@@ -97,6 +101,12 @@ namespace WebApplication5.Controllers
                     ModelState.AddModelError(string.Empty, "Tentativa de login inválida");
             }
             return View(model);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@model EditRolesViewModel
 @{
     ViewBag.Title = "Editar função";
+    Layout = "_ManagementLayout";
 }
 <h1>Editar Função</h1>
 
@@ -27,7 +28,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h3>Funcionários nesta função:</h3>
+            <h3>Usuários com esta função:</h3>
         </div>
         <div class="card-body">
             @if (Model.Users.Any())
@@ -43,7 +44,7 @@
             }
         </div>
         <div class="card-footer">
-            <a asp-action="EditUsersInRole" asp-controller="Admin" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width:auto">Gerenciar funcionários</a>
+            <a asp-action="EditUsersInRole" asp-controller="Admin" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width:auto">Gerenciar usuários</a>
         </div>
     </div>
 </form>

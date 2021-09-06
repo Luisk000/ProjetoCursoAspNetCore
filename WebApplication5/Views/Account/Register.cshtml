@@ -27,9 +27,12 @@
             </div>
             <br />
             <button type="submit" class="btn btn-primary">Cadastrar</button>
-            <br />
-            <br />
-            <a asp-controller="Account" asp-action="Login">Já possuo um registro</a>
+            @if (!(User.IsInRole("Admin")))
+            {
+                <br />
+                <br />
+                <a asp-controller="Account" asp-action="Login">Já possuo um registro</a>
+            }
         </form>
     </div>
 </div>

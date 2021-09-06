@@ -158,5 +158,64 @@ namespace WebApplication5.Controllers
             }
             return RedirectToAction("EditRoles", new { Id = roleId });
         }
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = _userManager.Users;
+            return View(users);
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Usuário com o Id {id} não foi encontrado";
+                return View("NotFound");
+            }
+            // GetClaimsAsync retorna a lista de Claims do usuário
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            // GetRolesAsync retorna a lista de Roles do usuário
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var model = new EditUsersViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                Claims = userClaims.Select(c => c.Value).ToList(),
+                Roles = userRoles
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditUsers(EditUsersViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Usuário com o Id {model.Id} não foi encontrado";
+                return View("NotFound");
+            }
+            else
+            {
+                user.Email = model.Email;
+                user.UserName = model.UserName;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+            }
+        }
     }
 }

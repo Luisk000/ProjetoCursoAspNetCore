@@ -17,6 +17,6 @@ namespace WebApplication5.Models
         [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Formato de email inválido")]
         [Required(ErrorMessage = "O email é necessário")]
         public string Email { get; set; }
-        public string PhotoPath { get; set; }
+        public string PhotoPath { get; set; } 
     }
 }
