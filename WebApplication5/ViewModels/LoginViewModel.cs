@@ -17,7 +17,7 @@ namespace WebApplication5.ViewModels
         [Display(Name = "Senha")]
         public string Password { get; set; }
 
-        [Display(Name="Remember me")]
+        [Display(Name="Lembra-me")]
         public bool RememberMe { get; set; }
     }
 }

@@ -43,8 +43,7 @@
             }
         </div>
         <div class="card-footer">
-            <a href="#" class="btn btn-primary" style="width:auto">Adicionar funcionários</a>
-            <a href="#" class="btn btn-primary" style="width:auto">Remover funcionários</a>
+            <a asp-action="EditUsersInRole" asp-controller="Admin" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width:auto">Gerenciar funcionários</a>
         </div>
     </div>
 </form>
