@@ -4,7 +4,6 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <script src="~/js/site.js"></script>
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -65,7 +64,7 @@
         </div>
         @if (IsSectionDefined("Scripts"))
         {
-            @RenderSection("Scripts", required: false)
+            @RenderSection("Scripts", required: true)
         }
     </div>
 </body>

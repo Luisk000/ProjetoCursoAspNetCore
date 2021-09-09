@@ -23,13 +23,13 @@ namespace WebApplication5.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
         //[Route("")]
- 
+
         [Route("[action]")]
         [Route("")]
         [AllowAnonymous]
         public ViewResult List()
         {
-            
+
             var model = _employeeRepository.GetAllEmployee();
             return View(model);
         }
@@ -47,7 +47,7 @@ namespace WebApplication5.Controllers
             {
                 Employee = employee,
                 PageTitle = "Dados de funcionários"
-            }; 
+            };
             return View(homeDetailsViewModel);
 
             //Employee model = _employeeRepository.GetEmployee(1);
@@ -61,7 +61,7 @@ namespace WebApplication5.Controllers
         [Route("[action]")]
         [HttpGet]
         public ViewResult Create()
-        {  
+        {
             return View();
         }
 
@@ -69,7 +69,7 @@ namespace WebApplication5.Controllers
         [HttpPost]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 string uniqueFilleName = ProcessUploadedFile(model);
                 Employee newEmployee = new Employee
@@ -113,7 +113,7 @@ namespace WebApplication5.Controllers
                 employee.Name = model.Name;
                 employee.Email = model.Email;
                 employee.Department = model.Department;
-                if(model.Photo != null)
+                if (model.Photo != null)
                 {
                     if (model.ExistingPhotoPath != null)
                     {
@@ -121,13 +121,14 @@ namespace WebApplication5.Controllers
                         System.IO.File.Delete(filePath);
                     }
                     employee.PhotoPath = ProcessUploadedFile(model);
-                }               
+                }
                 _employeeRepository.Update(employee);
                 //Employee newEmployee = _employeeRepository.Add(employee);
                 return RedirectToAction("List");
             }
             return View();
         }
+
         private string ProcessUploadedFile(EmployeeCreateViewModel model)
         {
             string uniqueFilleName = null;

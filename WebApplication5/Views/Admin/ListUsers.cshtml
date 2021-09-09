@@ -19,8 +19,19 @@
                 <h5 class="card-title">@user.UserName</h5>
             </div>
             <div class="card-footer">
-                <a asp-action="EditUser" asp-controller="Admin" asp-route-id="@user.Id" class="btn btn-primary">Editar</a>
-                <a href="#" class="btn btn-danger">Apagar</a>
+                
+                <form asp-action="DeleteUsers" asp-route-id="@user.Id" method="post">
+                    <a asp-action="EditUsers" asp-controller="Admin" asp-route-id="@user.Id" class="btn btn-primary">Editar</a>
+                    <span style="display:none" id="confirmDeleteSpan_@user.Id">
+                        <span>Você tem certeza que deseja apagar?</span>
+                        <!--onclink="return confirm('Você tem certeza que deseja apagar ''user.UserName')"-->
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                        <a href="#" class="btn btn-primary" onclick="confirmDelete('@user.Id', false)">Não</a>
+                    </span>
+                    <span id="deleteSpan_@user.Id">
+                        <a href="#" onclick="confirmDelete('@user.Id', true)" class="btn btn-danger">Apagar</a>
+                    </span>
+                </form>
             </div>
         </div>
     }
@@ -34,4 +45,8 @@ else
             <a class="btn btn-primary" style="width:auto" asp-controller="Account" asp-action="Register">Adicionar</a>
         </div>
     </div>
+}
+
+@section Scripts { 
+    <script src="~/js/CustomScript.js"></script>
 }

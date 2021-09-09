@@ -18,7 +18,7 @@ namespace WebApplication5.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Employee>().HasData(
+           /*modelBuilder.Entity<Employee>().HasData(
                 new Employee
                 {
                     Id = 2,
@@ -33,7 +33,12 @@ namespace WebApplication5.Models
                     Department = Dept.RH,
                     Email = "abcd@email.com"
                 }
-            );
+            ); */
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
         }
     }
 }

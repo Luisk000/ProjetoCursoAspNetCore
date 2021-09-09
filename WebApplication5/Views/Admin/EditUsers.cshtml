@@ -1,6 +1,7 @@
 ﻿@model EditUsersViewModel
 @{
     ViewBag.Title = "Editar Usuários";
+    Layout = "_ManagementLayout";
 }
 
 <h1>Editar Usuários</h1>
@@ -54,7 +55,7 @@
             }
         </div>
         <div class="card-footer">
-            <a href="#" style="width:auto" class="btn btn-primary">Gerenciar funções</a>
+            <a asp-action="ManageUserRoles" asp-route-userId="@Model.Id" style="width:auto" class="btn btn-primary">Gerenciar funções</a>
         </div>
     </div>
 
@@ -76,7 +77,7 @@
             }
         </div>
         <div class="card-footer">
-            <a href="#" style="width:auto" class="btn btn-primary">Gerenciar Claims</a>
+            <a asp-action="ManageUserClaims" asp-route-useId="@Model.Id" style="width:auto" class="btn btn-primary">Gerenciar Claims</a>
         </div>
     </div>
 </form>
