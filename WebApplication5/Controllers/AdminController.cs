@@ -14,6 +14,7 @@ using WebApplication5.ViewModels;
 namespace WebApplication5.Controllers
 {
     [Authorize(Roles = "Admin")]
+    //[Authorize(Policy = "AdminRolesPolicy")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -25,11 +26,15 @@ namespace WebApplication5.Controllers
             _userManager = userManager;
             _logger = logger;
         }
+
+
+
         [HttpGet]
         public IActionResult CreateRole()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
@@ -48,12 +53,18 @@ namespace WebApplication5.Controllers
             }     
             return View(model);
         }
+
+
+
         [HttpGet]
         public IActionResult ListRoles()
         {
             var roles = _roleManager.Roles;
             return View(roles);
         }
+
+
+
         [HttpGet]
         public async Task<IActionResult> EditRoles(string id)
         {
@@ -73,6 +84,7 @@ namespace WebApplication5.Controllers
             }
             return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> EditRoles(EditRolesViewModel model)
         {
@@ -97,6 +109,9 @@ namespace WebApplication5.Controllers
                 return View(model);
             }   
         }
+
+
+
         [HttpGet]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
@@ -123,6 +138,7 @@ namespace WebApplication5.Controllers
             }
             return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
@@ -163,12 +179,18 @@ namespace WebApplication5.Controllers
             }
             return RedirectToAction("EditRoles", new { Id = roleId });
         }
+
+
+
         [HttpGet]
         public IActionResult ListUsers()
         {
             var users = _userManager.Users;
             return View(users);
         }
+
+
+
         [HttpGet]
         public async Task<IActionResult> EditUsers(string id)
         {
@@ -194,6 +216,7 @@ namespace WebApplication5.Controllers
             };
             return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> EditUsers(EditUsersViewModel model)
         {
@@ -225,6 +248,8 @@ namespace WebApplication5.Controllers
             }
         }
 
+
+
         [HttpPost]
         public async Task<IActionResult> DeleteUsers(string id)
         {
@@ -253,7 +278,10 @@ namespace WebApplication5.Controllers
             }
         }
 
+
+
         [HttpPost]
+        [Authorize(Policy = "DeleteRolesPolicy")]
         public async Task<IActionResult> DeleteRoles(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -289,6 +317,9 @@ namespace WebApplication5.Controllers
                 }
             }
         }
+
+
+
         [HttpGet]
         public async Task<IActionResult> ManageUserRoles(string userId)
         {
@@ -315,6 +346,7 @@ namespace WebApplication5.Controllers
             }
             return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string userId)
         {
@@ -345,6 +377,9 @@ namespace WebApplication5.Controllers
 
             return RedirectToAction("EditUsers", new { Id = userId });
         }
+
+
+
         [HttpGet]
         public async Task<IActionResult> ManageUserClaims(string userId)
         {

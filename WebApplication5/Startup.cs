@@ -43,10 +43,26 @@ namespace WebApplication5
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
-            services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EmployeeDbConnection")));
+            services.AddDbContextPool<AppDbContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("EmployeeDbConnection")));
             services.AddControllersWithViews();
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
             //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DeleteRolesPolicy",
+                    policy => policy.RequireClaim("Delete Roles")                                   
+                    );
+                options.AddPolicy("EditRolesPolicy",
+                    policy => policy.RequireClaim("Edit Roles")
+                    );
+                options.AddPolicy("CreateRolesPolicy",
+                    policy => policy.RequireClaim("Create Roles")
+                    );
+                //options.AddPolicy("AdminRolesPolicy",
+                //policy => policy.RequireClaim("Admin", "Test") 
+                //);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

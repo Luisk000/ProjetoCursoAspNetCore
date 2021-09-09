@@ -11,9 +11,9 @@ namespace WebApplication5.Models
         public static List<Claim> AllClaims = new List<Claim>()
         {
             //(type, value)
-            new Claim("Create Role", "Create Role"),
-            new Claim("Edit Role", "Edit Role"),
-            new Claim("Delete Role", "Delete Role")
+            new Claim("Create Roles", "Create Roles"),
+            new Claim("Edit Roles", "Edit Roles"),
+            new Claim("Delete Roles", "Delete Roles")
         };
     }
 }
