@@ -94,3 +94,4 @@ C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\
 C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\Razor\Views\Admin\ListUsers.cshtml.g.cs
 C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\Razor\Views\Admin\EditUsers.cshtml.g.cs
 C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\Razor\Views\Admin\ManageUserRoles.cshtml.g.cs
+C:\Users\softadm1\source\repos\WebApplication5\WebApplication5\obj\Debug\net5.0\Razor\Views\Admin\ManageUserClaims.cshtml.g.cs

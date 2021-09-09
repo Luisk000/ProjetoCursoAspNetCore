@@ -335,8 +335,7 @@ namespace WebApplication5.Controllers
                 return View(model);
             }
 
-            result = await _userManager.AddToRolesAsync(user,
-                model.Where(x => x.IsSelected).Select(y => y.RoleName));
+            result = await _userManager.AddToRolesAsync(user, model.Where(x => x.IsSelected).Select(y => y.RoleName));
 
             if (!result.Succeeded)
             {
@@ -350,9 +349,10 @@ namespace WebApplication5.Controllers
         public async Task<IActionResult> ManageUserClaims(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
+
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"Função com o Id {userId} não foi encontrada";
+                ViewBag.ErrorMessage = $"Usuário com o Id {userId} não foi encontrada";
                 return View("NotFound");
             }
             var existingUserClaims = await _userManager.GetClaimsAsync(user);
@@ -377,7 +377,7 @@ namespace WebApplication5.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"Função com o Id {model.UserId} não foi encontrado";
+                ViewBag.ErrorMessage = $"Usuário com o Id {model.UserId} não foi encontrado";
                 return View("NotFound");
             }
 
