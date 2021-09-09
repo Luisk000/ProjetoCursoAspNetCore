@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -51,17 +52,25 @@ namespace WebApplication5
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("DeleteRolesPolicy",
-                    policy => policy.RequireClaim("Delete Roles")                                   
-                    );
-                options.AddPolicy("EditRolesPolicy",
-                    policy => policy.RequireClaim("Edit Roles")
+                    policy => policy.RequireClaim("Delete Roles", "sim")                                   
                     );
                 options.AddPolicy("CreateRolesPolicy",
-                    policy => policy.RequireClaim("Create Roles")
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole("Admin") && 
+                        context.User.HasClaim(claim => claim.Type == "Create Roles" && claim.Value == "sim") ||
+                        context.User.IsInRole("SuperAdmin")
+                    ));
+                options.AddPolicy("EditRolesPolicy",
+                    policy => policy.RequireClaim("Edit Roles", "sim")
+                                    .RequireRole("Admin")
                     );
                 //options.AddPolicy("AdminRolesPolicy",
                 //policy => policy.RequireClaim("Admin", "Test") 
                 //);
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = new PathString("/Admin/AccessDenied");
             });
         }
 

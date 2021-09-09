@@ -8,7 +8,7 @@ namespace WebApplication5.ViewModels
 {
     public class CreateRoleViewModel
     {
-        [Required(ErrorMessage = "Defina uma função válida")]
+        [Required(ErrorMessage = "Defina uma papel válida")]
         public string RoleName { get; set; }
     }
 }

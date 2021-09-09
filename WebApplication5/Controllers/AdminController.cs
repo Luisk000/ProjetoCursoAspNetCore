@@ -30,12 +30,14 @@ namespace WebApplication5.Controllers
 
 
         [HttpGet]
+        [Authorize(Policy = "CreateRolesPolicy")]
         public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Policy = "CreateRolesPolicy")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -66,12 +68,13 @@ namespace WebApplication5.Controllers
 
 
         [HttpGet]
+        [Authorize(Policy = "EditRolesPolicy")]
         public async Task<IActionResult> EditRoles(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Função com Id: {id} não foi encontrada";
+                ViewBag.ErrorMessage = $"Papel com Id: {id} não foi encontrada";
                 return View("NotFound");
             }
             var model = new EditRolesViewModel { Id = role.Id, RoleName = role.Name };
@@ -86,12 +89,13 @@ namespace WebApplication5.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "EditRolesPolicy")]
         public async Task<IActionResult> EditRoles(EditRolesViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.Id);
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Função com Id: {model.Id} não foi encontrada";
+                ViewBag.ErrorMessage = $"Papel com Id: {model.Id} não foi encontrada";
                 return View("NotFound");
             }
             else
@@ -211,7 +215,7 @@ namespace WebApplication5.Controllers
                 Id = user.Id,
                 Email = user.Email,
                 UserName = user.UserName,
-                Claims = userClaims.Select(c => c.Value).ToList(),
+                Claims = userClaims.Select(c => c.Type + " : " + c.Value).ToList(),
                 Roles = userRoles
             };
             return View(model);
@@ -288,7 +292,7 @@ namespace WebApplication5.Controllers
 
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Função com o Id {id} não foi encontrado";
+                ViewBag.ErrorMessage = $"Papel com o Id {id} não foi encontrado";
                 return View("NotFound");
             }
             else
@@ -312,7 +316,7 @@ namespace WebApplication5.Controllers
                 {
                     _logger.LogError($"Erro apagando o role {ex}");
                     ViewBag.ErrorTitle = $"{role.Name} está sendo usado";
-                    ViewBag.ErrorMessage = $"A função {role.Name} não pode ser apagada pois há usuários nela, remova os usuários desta função para apagá-la";
+                    ViewBag.ErrorMessage = $"O papel {role.Name} não pode ser apagada pois há usuários nela, remova os usuários desta papel para apagá-la";
                     return View("Error");
                 }
             }
@@ -327,7 +331,7 @@ namespace WebApplication5.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"Função com o Id {userId} não foi encontrado";
+                ViewBag.ErrorMessage = $"Papel com o Id {userId} não foi encontrado";
                 return View("NotFound");
             }
             var model = new List<UserRolesViewModel>();
@@ -354,7 +358,7 @@ namespace WebApplication5.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"Função com o Id {userId} não foi encontrado";
+                ViewBag.ErrorMessage = $"Papel com o Id {userId} não foi encontrado";
                 return View("NotFound");
             }
 
@@ -363,7 +367,7 @@ namespace WebApplication5.Controllers
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Não pode remover funções do usuário");
+                ModelState.AddModelError("", "Não pode remover papéis do usuário");
                 return View(model);
             }
 
@@ -371,7 +375,7 @@ namespace WebApplication5.Controllers
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Não pode adicionar funções ao usuário");
+                ModelState.AddModelError("", "Não pode adicionar papéis ao usuário");
                 return View(model);
             }
 
@@ -387,7 +391,7 @@ namespace WebApplication5.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"Usuário com o Id {userId} não foi encontrada";
+                ViewBag.ErrorMessage = $"Usuário com o Id {userId} não foi encontrado";
                 return View("NotFound");
             }
             var existingUserClaims = await _userManager.GetClaimsAsync(user);
@@ -396,7 +400,7 @@ namespace WebApplication5.Controllers
             foreach (Claim claim in ClaimsStore.AllClaims)
             {
                 UserClaim userClaim = new UserClaim { ClaimType = claim.Type };
-                if (existingUserClaims.Any(c => c.Type == claim.Type))
+                if (existingUserClaims.Any(c => c.Type == claim.Type && c.Value == "sim"))
                 {
                     userClaim.IsSelected = true;
                 }
@@ -427,7 +431,7 @@ namespace WebApplication5.Controllers
             }
 
             // Add all the claims that are selected on the UI
-            result = await _userManager.AddClaimsAsync(user, model.Claims.Where(c => c.IsSelected).Select(c => new Claim(c.ClaimType, c.ClaimType)));
+            result = await _userManager.AddClaimsAsync(user, model.Claims.Select(c => new Claim(c.ClaimType, c.IsSelected ? "sim" :  "não")));
 
             if (!result.Succeeded)
             {
@@ -435,6 +439,15 @@ namespace WebApplication5.Controllers
                 return View(model);
             }
             return RedirectToAction("EditUsers", new { Id = model.UserId });
+        }
+
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

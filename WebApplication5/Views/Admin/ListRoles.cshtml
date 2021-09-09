@@ -5,16 +5,17 @@
 @inject IAuthorizationService authorizationService
 
 @{
-    ViewBag.Title = "Todas as funções";
+    ViewBag.Title = "Todos os papéis";
     Layout = "_ManagementLayout";
 }
-<h1>Todas as funções</h1>
+<h1>Todas as papéis</h1>
 
 @if (Model.Any())
 {
-    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole"
-       asp-controller="Admin">Adicionar nova função</a>
-
+    @if ((await authorizationService.AuthorizeAsync(User, "CreateRolesPolicy")).Succeeded)
+     {
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole" asp-controller="Admin">Adicionar novo papel</a>
+     }
     foreach (var role in Model)
     {
         <div class="card mb-3">
@@ -46,11 +47,14 @@
 else
 {
     <div class="card">
-        <div class="card-header">Nenhuma função criada ainda</div>
+        <div class="card-header">Nenhum papel criado ainda</div>
+         @if ((await authorizationService.AuthorizeAsync(User, "CreateRolesPolicy")).Succeeded)
+          {
         <div class="card-body">
-            <h5 class="card-title">Clique para adicionar uma função</h5>
+            <h5 class="card-title">Clique para adicionar um papel</h5>
             <a class="btn btn-primary" style="width:auto" asp-controller="Admin" asp-action="CreateRole">Criar</a>
         </div>
+          }
     </div>
 }
 

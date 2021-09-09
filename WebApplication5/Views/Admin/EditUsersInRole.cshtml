@@ -2,12 +2,12 @@
 @{
     var roleId = ViewBag.roleId;
     Layout = "_ManagementLayout";
-    ViewBag.Title = "Editar funções de usuários";
+    ViewBag.Title = "Editar papéis de usuários";
 }
 <form method="post">
     <div class="card">
         <div class="card-header">
-            <h2>Adicione ou remova usuários desta função</h2>
+            <h2>Adicione ou remova usuários desta papel</h2>
         </div>
         <div class="card-body">
             @for (int i = 0; i < Model.Count; i++)
