@@ -27,8 +27,6 @@ namespace WebApplication5.Controllers
             _logger = logger;
         }
 
-
-
         [HttpGet]
         [Authorize(Policy = "CreateRolesPolicy")]
         public IActionResult CreateRole()
@@ -68,7 +66,7 @@ namespace WebApplication5.Controllers
 
 
         [HttpGet]
-        [Authorize(Policy = "EditRolesPolicy")]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditRoles(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -89,7 +87,7 @@ namespace WebApplication5.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "EditRolesPolicy")]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditRoles(EditRolesViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.Id);
@@ -117,13 +115,14 @@ namespace WebApplication5.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewBag.roleId = roleId;
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null) 
             {
-                ViewBag.ErrorMessage = $"Função com Id: {roleId} não foi encontrada";
+                ViewBag.ErrorMessage = $"Papel com Id: {roleId} não foi encontrada";
                 return View("NotFound");
             }
             var model = new List<UserRoleViewModel>();
@@ -144,12 +143,13 @@ namespace WebApplication5.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Super Admin")]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Função com Id: {roleId} não foi encontrada";
+                ViewBag.ErrorMessage = $"Papel com Id: {roleId} não foi encontrada";
                 return View("NotFound");
             }
             for(int i=0; i<model.Count; i++)
@@ -205,6 +205,7 @@ namespace WebApplication5.Controllers
                 ViewBag.ErrorMessage = $"Usuário com o Id {id} não foi encontrado";
                 return View("NotFound");
             }
+
             // GetClaimsAsync retorna a lista de Claims do usuário
             var userClaims = await _userManager.GetClaimsAsync(user);
             // GetRolesAsync retorna a lista de Roles do usuário
@@ -255,6 +256,7 @@ namespace WebApplication5.Controllers
 
 
         [HttpPost]
+        [Authorize(Policy = "DeleteRolesPolicy")]
         public async Task<IActionResult> DeleteUsers(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -325,6 +327,7 @@ namespace WebApplication5.Controllers
 
 
         [HttpGet]
+        [Authorize(Policy = "EditRolesPolicy")]
         public async Task<IActionResult> ManageUserRoles(string userId)
         {
             ViewBag.userId = userId;
@@ -352,6 +355,7 @@ namespace WebApplication5.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "EditRolesPolicy")]
         public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -385,6 +389,7 @@ namespace WebApplication5.Controllers
 
 
         [HttpGet]
+        [Authorize(Policy = "EditRolesPolicy")]
         public async Task<IActionResult> ManageUserClaims(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -410,6 +415,7 @@ namespace WebApplication5.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "EditRolesPolicy")]
         public async Task<IActionResult> ManageUserClaims(UserClaimsViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.UserId);

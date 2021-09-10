@@ -6,7 +6,6 @@
 
 @{
     ViewBag.Title = "Todos os papéis";
-    Layout = "_ManagementLayout";
 }
 <h1>Todas as papéis</h1>
 
@@ -26,11 +25,7 @@
             <div class="card-footer">
                 
                 <form asp-action="DeleteRoles" asp-route-id="@role.Id" method="post">
-
-                    @if ((await authorizationService.AuthorizeAsync(User, "EditRolesPolicy")).Succeeded)
-                     {
-                        <a asp-action="EditRoles" asp-controller="Admin" asp-route-id="@role.Id" class="btn btn-primary">Editar</a>
-                     }
+                    <a asp-action="EditRoles" asp-controller="Admin" asp-route-id="@role.Id" class="btn btn-primary">Editar</a>
                     <span style="display:none" id="confirmDeleteSpan_@role.Id">
                         <span>Você tem certeza que deseja apagar?</span>
                         <button type="submit" class="btn btn-danger">Sim</button>

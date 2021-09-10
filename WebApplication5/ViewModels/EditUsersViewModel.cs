@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace WebApplication5.ViewModels
     {
         public EditUsersViewModel()
         {
-            Claims = new List<string>();
+            Claims = new List<string>();                         
             Roles = new List<string>();
         }
         public string Id { get; set; }

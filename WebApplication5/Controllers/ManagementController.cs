@@ -11,6 +11,7 @@ using WebApplication5.ViewModels;
 
 namespace WebApplication5.Controllers
 {
+    [Route("")]
     [Route("[controller]")]
     [Authorize]
     public class ManagementController : Controller
@@ -22,11 +23,9 @@ namespace WebApplication5.Controllers
             _employeeRepository = employeeRepository;
             _hostingEnvironment = hostingEnvironment;
         }
-        //[Route("")]
 
-
-        [Route("[action]")]
         [Route("")]
+        [Route("[action]")]
         [AllowAnonymous]
         public ViewResult List()
         {
@@ -58,7 +57,6 @@ namespace WebApplication5.Controllers
             //ViewBag.PageTitle = "Employee Details";
             //return View(model);
         }
-
 
         [Route("[action]")]
         [HttpGet]

@@ -13,7 +13,7 @@ namespace WebApplication5.Models
             //(type, value)
             new Claim("Create Roles", "Create Roles"),
             new Claim("Edit Roles", "Edit Roles"),
-            new Claim("Delete Roles", "Delete Roles")
+            new Claim("Delete Roles", "Delete Roles"),
         };
     }
 }
