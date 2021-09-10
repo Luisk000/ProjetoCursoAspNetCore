@@ -12,11 +12,20 @@
                 <h3>@employee.Name (@employee.Id)</h3>
             </div>
             <!--<img class="card-img-top" src="~/images/undefined.png" />-->
-            <div class="card-footer text-center">               
+            <div class="card-footer text-center">
                 <a asp-controller="Management" asp-action="Details" asp-route-id="@employee.Id" class="btn btn-primary m-1">Visualizar</a>
                 <!--<a href="/management/details/''employee.Id" class="btn btn-primary">View</a>-->
                 <a asp-action="Edit" asp-controller="Management" asp-route-id="@employee.Id" class="btn btn-primary m-1">Editar</a>
-                <a href="#" class="btn btn-danger m-1">Apagar</a>
+                <form asp-action="Erase" asp-controller="Management" asp-route-id="@employee.Id" method="post">              
+                    <span style="display:none" id="confirmDeleteSpan_@employee.Id">
+                        <span>Você tem certeza que deseja apagar?</span>
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                        <a href="#" class="btn btn-primary" onclick="confirmDelete('@employee.Id', false)">Não</a>
+                    </span>
+                    <span id="deleteSpan_@employee.Id">
+                        <a href="#" onclick="confirmDelete('@employee.Id', true)" class="btn btn-danger">Apagar</a>
+                    </span>
+                </form>
             </div>
         </div>
         }

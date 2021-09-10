@@ -10,7 +10,7 @@ namespace WebApplication5.Models
         private readonly AppDbContext context;
         public SQLEmployeeRepository(AppDbContext _context)
         {
-            this.context = _context;
+            context = _context;
         }
         public Employee Add(Employee employee)
         {

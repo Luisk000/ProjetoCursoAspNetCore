@@ -24,15 +24,16 @@ namespace WebApplication5.Controllers
         }
         //[Route("")]
 
+
         [Route("[action]")]
         [Route("")]
         [AllowAnonymous]
         public ViewResult List()
         {
-
             var model = _employeeRepository.GetAllEmployee();
             return View(model);
         }
+
 
         [Route("[action]/{id?}")]
         public ViewResult Details(int? id)
@@ -58,12 +59,14 @@ namespace WebApplication5.Controllers
             //return View(model);
         }
 
+
         [Route("[action]")]
         [HttpGet]
         public ViewResult Create()
         {
             return View();
         }
+
 
         [Route("[action]")]
         [HttpPost]
@@ -86,6 +89,7 @@ namespace WebApplication5.Controllers
             return View();
         }
 
+
         [Route("[action]")]
         [HttpGet]
         public ViewResult Edit(int id)
@@ -101,6 +105,7 @@ namespace WebApplication5.Controllers
             };
             return View(employeeEditViewModel);
         }
+
 
         [Route("[action]")]
         [HttpPost]
@@ -128,6 +133,14 @@ namespace WebApplication5.Controllers
             }
             return View();
         }
+
+       [HttpPost]
+       public IActionResult Erase(int id)
+       {
+            Employee employee = _employeeRepository.Delete(id);
+            return View();
+        }
+
 
         private string ProcessUploadedFile(EmployeeCreateViewModel model)
         {
