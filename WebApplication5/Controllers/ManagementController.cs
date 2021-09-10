@@ -137,8 +137,8 @@ namespace WebApplication5.Controllers
        [HttpPost]
        public IActionResult Erase(int id)
        {
-            Employee employee = _employeeRepository.Delete(id);
-            return View();
+            _employeeRepository.Delete(id);
+            return RedirectToAction("List");
         }
 
 

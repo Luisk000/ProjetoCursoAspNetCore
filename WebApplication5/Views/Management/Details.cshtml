@@ -21,14 +21,24 @@
                 <h5>Departamento : @Model.Employee.Department</h5>
 
             </div>
-            <div class="card-footer text-center">
-                <a asp-controller="Management" asp-action="List" class="btn btn-primary">Voltar</a>
-                <a asp-action="Edit" asp-controller="Management" asp-route-id="@Model.Employee.Id" class="btn btn-primary">Editar</a>
-                <a href="#" class="btn btn-danger">Apagar</a>
+            <div class="card-footer text-center">       
+                <form asp-action="Erase" asp-controller="Management" asp-route-id="@Model.Employee.Id" method="post">
+                    <a asp-controller="Management" asp-action="List" class="btn btn-primary">Voltar</a>
+                    <a asp-action="Edit" asp-controller="Management" asp-route-id="@Model.Employee.Id" class="btn btn-primary">Editar</a>
+                    <span style="display:none" id="confirmDeleteSpan_@Model.Employee.Id">
+                        <span>Você tem certeza que deseja apagar?</span>
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                        <a href="#" class="btn btn-primary" onclick="confirmDelete('@Model.Employee.Id', false)">Não</a>
+                    </span>
+                    <span id="deleteSpan_@Model.Employee.Id">
+                        <a href="#" onclick="confirmDelete('@Model.Employee.Id', true)" class="btn btn-danger">Apagar</a>
+                    </span>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 @section Scripts {
-    <script src="~/js/site.js"></script>
+    <script src="~/js/CustomScript.js"></script>
 }

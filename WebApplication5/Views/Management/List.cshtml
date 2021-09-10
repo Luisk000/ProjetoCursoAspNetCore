@@ -4,19 +4,20 @@
     ViewBag.Title = "Lista de Funcionários";
 }
 
-    <div class="card-deck">
-        @foreach (var employee in Model)
-        {
+<div class="card-deck">
+    @foreach (var employee in Model)
+    {
         <div class="card m-3">
             <div class="card-header">
                 <h3>@employee.Name (@employee.Id)</h3>
             </div>
             <!--<img class="card-img-top" src="~/images/undefined.png" />-->
             <div class="card-footer text-center">
-                <a asp-controller="Management" asp-action="Details" asp-route-id="@employee.Id" class="btn btn-primary m-1">Visualizar</a>
-                <!--<a href="/management/details/''employee.Id" class="btn btn-primary">View</a>-->
-                <a asp-action="Edit" asp-controller="Management" asp-route-id="@employee.Id" class="btn btn-primary m-1">Editar</a>
-                <form asp-action="Erase" asp-controller="Management" asp-route-id="@employee.Id" method="post">              
+                
+                <form asp-action="Erase" asp-controller="Management" asp-route-id="@employee.Id" method="post">
+                    <a asp-controller="Management" asp-action="Details" asp-route-id="@employee.Id" class="btn btn-primary m-1">Visualizar</a>
+                    <!--<a href="/management/details/''employee.Id" class="btn btn-primary">View</a>-->
+                    <a asp-action="Edit" asp-controller="Management" asp-route-id="@employee.Id" class="btn btn-primary m-1">Editar</a>
                     <span style="display:none" id="confirmDeleteSpan_@employee.Id">
                         <span>Você tem certeza que deseja apagar?</span>
                         <button type="submit" class="btn btn-danger">Sim</button>
@@ -28,6 +29,10 @@
                 </form>
             </div>
         </div>
-        }
-        <a asp-controller="Home" asp-action="Index" class="btn btn-primary m-1">Voltar</a>
-    </div>
+    }
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary m-1">Voltar</a>
+</div>
+
+@section Scripts {
+    <script src="~/js/CustomScript.js"></script>
+}
