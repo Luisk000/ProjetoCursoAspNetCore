@@ -76,12 +76,8 @@ namespace WebApplication5.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl)
+        public IActionResult Login()
         {
-            LoginViewModel model = new LoginViewModel { 
-                ReturnUrl = returnUrl,
-                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
-                };
             return View();
         }
         [HttpPost]
@@ -108,3 +104,5 @@ namespace WebApplication5.Controllers
         }
     }
 }
+
+//1

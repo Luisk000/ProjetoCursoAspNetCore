@@ -75,13 +75,6 @@ namespace WebApplication5
             {
                 options.AccessDeniedPath = new PathString("/Admin/AccessDenied");
             });
-
-            services.AddAuthentication()
-                .AddGoogle(options => 
-                {
-                    options.ClientId = "586234923771-mqbcib3rtod1sseif8lh131qmvgd8jip.apps.googleusercontent.com";
-                    options.ClientSecret = "CRJe4n-IN_V-ToAEZC71FWNg";
-                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
