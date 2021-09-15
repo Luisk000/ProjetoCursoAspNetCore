@@ -67,6 +67,7 @@ namespace WebApplication5.Controllers
 
 
         [Route("[action]")]
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
